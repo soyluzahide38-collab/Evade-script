@@ -1,8 +1,3 @@
--- ==============================================================================
--- PROJE: Evade Script Pro Hub (V2 - Orijinal "Mod by Ömer" İmzalı Sürüm)
--- TASARLAYAN VE KODLAYAN: Ömer 🇹🇷 ⚡
--- ==============================================================================
-
 local success, runtimeError = pcall(function()
     local Players = game:GetService("Players")
     local UIS = game:GetService("UserInputService")
@@ -12,6 +7,7 @@ local success, runtimeError = pcall(function()
     local Plr = Players.LocalPlayer
     local PlrGui = Plr:WaitForChild("PlayerGui")
 
+    -- Eskiden kalıntı varsa temizle
     for _, v in ipairs({"EvadeProHubWindow", "BhopMenuGUI"}) do
         if PlrGui:FindFirstChild(v) then PlrGui[v]:Destroy() end
     end
@@ -46,20 +42,25 @@ local success, runtimeError = pcall(function()
         end)
     end
 
+    -- Ana Ekran GUI'si (Her çalıştırışta kendine özel bir kopya oluşturur)
     local SG = Create("ScreenGui", PlrGui, { Name = "EvadeProHubWindow", ResetOnSpawn = false, DisplayOrder = 99999 })
     local Main = Create("Frame", SG, { Size = UDim2.new(0, 480, 0, 330), Position = UDim2.new(0.5, -240, 0.5, -165), BackgroundColor3 = Color3.fromRGB(18, 18, 24), BorderSizePixel = 0 })
     Corner(Main, 10)
 
-    -- Üst Başlık ve Orijinal Gri "Mod by Ömer" İmzası
     local TopBar = Create("Frame", Main, { Size = UDim2.new(1, 0, 0, 52), BackgroundColor3 = Color3.fromRGB(25, 25, 35), BorderSizePixel = 0 })
     Corner(TopBar, 10)
     Create("Frame", TopBar, { Size = UDim2.new(1, 0, 0, 6), Position = UDim2.new(0, 0, 1, -6), BackgroundColor3 = Color3.fromRGB(25, 25, 35), BorderSizePixel = 0 })
 
-    Create("TextLabel", TopBar, { Size = UDim2.new(1, -50, 0, 22), Position = UDim2.new(0, 10, 0, 4), BackgroundTransparency = 1, Text = "👤 " .. Plr.Name .. " | Evade Pro Hub V2 🇹🇷 ⚡", TextColor3 = Color3.fromRGB(240, 240, 245), TextSize = 11, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Left })
+    Create("TextLabel", TopBar, { Size = UDim2.new(1, -75, 0, 22), Position = UDim2.new(0, 10, 0, 4), BackgroundTransparency = 1, Text = "👤 " .. Plr.Name .. " | Evade Pro Hub V2 🇹🇷 ⚡", TextColor3 = Color3.fromRGB(240, 240, 245), TextSize = 11, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Left })
     Create("TextLabel", TopBar, { Size = UDim2.new(1, -20, 0, 20), Position = UDim2.new(0, 0, 0, 26), BackgroundTransparency = 1, Text = "Mod by Ömer", TextColor3 = Color3.fromRGB(160, 160, 175), TextSize = 10, Font = Enum.Font.GothamMedium, TextXAlignment = Enum.TextXAlignment.Center })
 
-    local MinBtn = Create("TextButton", TopBar, { Size = UDim2.new(0, 32, 0, 26), Position = UDim2.new(1, -38, 0, 4), BackgroundColor3 = Color3.fromRGB(40, 40, 55), BorderSizePixel = 0, Text = "-", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 16, Font = Enum.Font.GothamBold })
+    -- Küçültme Butonu (-)
+    local MinBtn = Create("TextButton", TopBar, { Size = UDim2.new(0, 26, 0, 26), Position = UDim2.new(1, -64, 0, 4), BackgroundColor3 = Color3.fromRGB(40, 40, 55), BorderSizePixel = 0, Text = "-", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 16, Font = Enum.Font.GothamBold })
     Corner(MinBtn, 6)
+
+    -- Sadece tıklandığı o pencereyi (SG) yok eden özel Kapatma Butonu (X)
+    local CloseBtn = Create("TextButton", TopBar, { Size = UDim2.new(0, 26, 0, 26), Position = UDim2.new(1, -34, 0, 4), BackgroundColor3 = Color3.fromRGB(200, 50, 50), BorderSizePixel = 0, Text = "X", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 14, Font = Enum.Font.GothamBold })
+    Corner(CloseBtn, 6)
 
     local OpenBtn = Create("TextButton", SG, { Size = UDim2.new(0, 40, 0, 40), Position = UDim2.new(0, 150, 0, 55), BackgroundColor3 = Color3.fromRGB(25, 25, 35), BorderSizePixel = 0, Text = "⚡", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 20, Visible = false })
     Corner(OpenBtn, 8)
@@ -107,7 +108,6 @@ local success, runtimeError = pcall(function()
     createTabButton("⏳ Yakında", "Soon2", 6)
     createTabButton("📢 Güncellemeler", "Updates", 7)
 
-    -- 1. Info Player
     local infoPage = pages["InfoPlayer"]
     local avatarFrame = Create("Frame", infoPage, { Size = UDim2.new(1, -6, 0, 95), BackgroundColor3 = Color3.fromRGB(24, 24, 32), BorderSizePixel = 0 })
     Corner(avatarFrame, 8)
@@ -122,7 +122,6 @@ local success, runtimeError = pcall(function()
         TextColor3 = Color3.fromRGB(210, 230, 255), TextSize = 10, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Center, TextYAlignment = Enum.TextYAlignment.Center, TextWrapped = true 
     })
 
-    -- 2. V3 Bilgi Sayfası
     local v3Page = pages["V3Info"]
     local v3Box = Create("Frame", v3Page, { Size = UDim2.new(1, -6, 0, 280), BackgroundColor3 = Color3.fromRGB(24, 24, 32), BorderSizePixel = 0 })
     Corner(v3Box, 8)
@@ -141,12 +140,10 @@ local success, runtimeError = pcall(function()
         TextColor3 = Color3.fromRGB(255, 50, 50), TextSize = 11, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Center, TextYAlignment = Enum.TextYAlignment.Top, TextWrapped = true 
     })
 
-    -- 3. Ana Menü
     local mainPage = pages["Main"]
     local OpenBhopWinBtn = Create("TextButton", mainPage, { Size = UDim2.new(1, -6, 0, 40), BackgroundColor3 = Color3.fromRGB(35, 35, 48), BorderSizePixel = 0, Text = "Bhop Kontrol Penceresini Aç", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 11, Font = Enum.Font.GothamBold })
     Corner(OpenBhopWinBtn, 6)
 
-    -- 4. Players Sayfası
     local playersPage = pages["Players"]
     local SpeedToggleBtn = Create("TextButton", playersPage, { Size = UDim2.new(1, -6, 0, 36), BackgroundColor3 = Color3.fromRGB(35, 35, 48), BorderSizePixel = 0, Text = "Özel Hız (Speed): OFF", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 11, Font = Enum.Font.GothamBold })
     Corner(SpeedToggleBtn, 6)
@@ -158,7 +155,6 @@ local success, runtimeError = pcall(function()
     local JumpTextBox = Create("TextBox", playersPage, { Size = UDim2.new(1, -6, 0, 34), BackgroundColor3 = Color3.fromRGB(24, 24, 32), BorderSizePixel = 0, Text = "100", PlaceholderText = "Jump Değeri", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 11, Font = Enum.Font.GothamMedium })
     Corner(JumpTextBox, 6)
 
-    -- 5. Visuals Sayfası
     local visualsPage = pages["Visuals"]
     local FovToggleBtn = Create("TextButton", visualsPage, { Size = UDim2.new(1, -6, 0, 36), BackgroundColor3 = Color3.fromRGB(35, 35, 48), BorderSizePixel = 0, Text = "Özel FOV Ayarı: OFF", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 11, Font = Enum.Font.GothamBold })
     Corner(FovToggleBtn, 6)
@@ -168,13 +164,11 @@ local success, runtimeError = pcall(function()
     local StretchedToggleBtn = Create("TextButton", visualsPage, { Size = UDim2.new(1, -6, 0, 36), BackgroundColor3 = Color3.fromRGB(35, 35, 48), BorderSizePixel = 0, Text = "Basık Ekran (Stretched): OFF", TextColor3 = Color3.fromRGB(255, 255, 255), TextSize = 11, Font = Enum.Font.GothamBold })
     Corner(StretchedToggleBtn, 6)
 
-    -- 6. Yakında Sayfası
     local soonPage = pages["Soon2"]
     local soonBox = Create("Frame", soonPage, { Size = UDim2.new(1, -6, 0, 120), BackgroundColor3 = Color3.fromRGB(24, 24, 32), BorderSizePixel = 0 })
     Corner(soonBox, 8)
     Create("TextLabel", soonBox, { Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, Text = "⏳ Yakında Gelecek...", TextColor3 = Color3.fromRGB(220, 180, 50), TextSize = 11, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Center, TextYAlignment = Enum.TextYAlignment.Center })
 
-    -- 7. Güncellemeler Sayfası
     local updatesPage = pages["Updates"]
     local UpdateInfoBox = Create("TextLabel", updatesPage, { 
         Size = UDim2.new(1, -6, 0, 180), BackgroundColor3 = Color3.fromRGB(24, 24, 32), BorderSizePixel = 0, 
@@ -197,6 +191,10 @@ local success, runtimeError = pcall(function()
     MakeDraggable(BhopTopBar, BhopWindow)
 
     MinBtn.MouseButton1Click:Connect(function() Main.Visible, OpenBtn.Visible = false, true end)
+    
+    -- ÖNEMLİ: Sadece tıklandığı o anki ana pencereyi (SG) yok eder! Diğer açılanlar etkilenmez.
+    CloseBtn.MouseButton1Click:Connect(function() SG:Destroy() end)
+
     OpenBtn.MouseButton1Click:Connect(function() Main.Visible, OpenBtn.Visible = true, false end)
     OpenBhopWinBtn.MouseButton1Click:Connect(function() BhopWindow.Visible = not BhopWindow.Visible end)
 
@@ -256,9 +254,6 @@ local success, runtimeError = pcall(function()
                 if jOn then
                     hum.JumpPower = jVal
                     hum.UseJumpPower = true
-                    if hum.FloorMaterial ~= Enum.Material.Air and UIS:IsKeyDown(Enum.KeyCode.Space) then
-                        root.AssemblyLinearVelocity = Vector3.new(root.AssemblyLinearVelocity.X, jVal / 2, root.AssemblyLinearVelocity.Z)
-                    end
                 else
                     hum.JumpPower = 50
                 end
@@ -276,13 +271,6 @@ local success, runtimeError = pcall(function()
                     end
                 end
             end
-        end
-    end)
-
-    Camera:GetPropertyChangedSignal("FieldOfView"):Connect(function()
-        if fOn and not strOn then
-            local fVal = tonumber(FovTextBox.Text) or 90
-            if Camera.FieldOfView ~= fVal then Camera.FieldOfView = math.clamp(fVal, 10, 300) end
         end
     end)
 end)
