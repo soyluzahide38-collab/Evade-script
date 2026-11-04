@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/soyluzahide38-collab/Evade-script/refs/heads/main/scrip.lua"))()
